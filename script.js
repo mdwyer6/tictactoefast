@@ -4,8 +4,11 @@ var Game = function() {
     [' . ', ' . ', ' . '],
     [' . ', ' . ', ' . ']
   ];
-
-  this.currentTurn = "X";
+  var types = ['X', 'O']
+  this.currentTurn = types[Math.floor(Math.rand() * 2)];
+  console.log('Lets start the game!');
+  console.log('Player ' + this.currentTurn + ' goes first');
+  this.draw();
 };
 
 Game.prototype.draw() {
@@ -40,11 +43,21 @@ Game.prototype.endGame() {
 }
 
 Game.prototype.checkForWin() {
+  var winner = false;
   for (var i = 0; i < this.board.length; i++) {
+    var count = [0, 0];
     for (var j = 0; j < this.board[i].length; j++) {
-      this.board
+      if (this.board[i][j] === 'X') {
+        count[0]++;
+      } else if (this.board[i][j] === 'O') {
+        count[1]++;
+      }
+    }
+    if (count[0] === 3 || count[1] === 3) {
+      winner = true;
     }
   }
-
-  console.log()
+  if (winner) {
+    console.log("Player " + this.currentTurn +" has won the game");
+  }
 }
